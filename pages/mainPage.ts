@@ -1,19 +1,19 @@
 import { Page } from '@playwright/test';
 import { BasePage } from './basePage';
-import { CoockiePopUp } from './comonents/coockiePopUp';
+import { CookiePopUp } from './comonents/coockiePopUp';
 import { TopBar } from './comonents/topBar';
 
 export class MainPage extends BasePage {
   readonly topBar: TopBar;
-  _cookiePopUp?: CoockiePopUp;
+  _cookiePopUp?: CookiePopUp;
 
   constructor(page: Page) {
     super(page);
     this.topBar = new TopBar(page);
   }
 
-  get cookiePopUp(): CoockiePopUp {
-    return (this._cookiePopUp ??= new CoockiePopUp(this.page));
+  get cookiePopUp(): CookiePopUp {
+    return (this._cookiePopUp ??= new CookiePopUp(this.page));
   }
   
 }

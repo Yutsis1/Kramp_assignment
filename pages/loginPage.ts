@@ -1,9 +1,9 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from './basePage';
-import { CoockiePopUp } from './comonents/coockiePopUp';
+import { CookiePopUp } from './comonents/coockiePopUp';
 
 export class LoginPage extends BasePage {
-  private _cookiePopUp?: CoockiePopUp;
+  private _cookiePopUp?: CookiePopUp;
 
   constructor(page: Page) {
     super(page);
@@ -29,8 +29,8 @@ export class LoginPage extends BasePage {
     return this.loginForm.getByRole('button', { name: 'Inloggen' });
   }
 
-  get cookiePopUp(): CoockiePopUp {
-    return (this._cookiePopUp ??= new CoockiePopUp(this.page));
+  get cookiePopUp(): CookiePopUp {
+    return (this._cookiePopUp ??= new CookiePopUp(this.page));
   }
 
   async closeCookiePopUpIfAppears() {

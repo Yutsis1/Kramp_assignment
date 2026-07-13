@@ -1,11 +1,9 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { BasePage } from './basePage';
 import { TopBar } from './comonents/topBar';
+import { normalizePrice, Price } from '../helpers/price';
 
-export type ProductPrice = {
-  asNumber: number;
-  asString: string;
-};
+export type ProductPrice = Price;
 
 export class ProductPage extends BasePage {
   private _topBar?: TopBar;
@@ -53,15 +51,7 @@ export class ProductPage extends BasePage {
   }
 
   async getPrice(): Promise<ProductPrice> {
-    const asString = (await this.grossPrice.innerText()).trim();
-    const numericPrice = asString.replace(/[^\d,.-]/g, '').replace(',', '.');
-    const asNumber = Number(numericPrice);
-
-    if (Number.isNaN(asNumber)) {
-      throw new Error(`Could not parse product price: "${asString}"`);
-    }
-
-    return { asNumber, asString };
+    return normalizePrice(await this.grossPrice.innerText());
   }
 
   async setQuantity(quantity: number) {

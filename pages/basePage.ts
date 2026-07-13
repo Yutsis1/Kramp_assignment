@@ -9,7 +9,7 @@ export abstract class BasePage {
   }
 
   async waitForPage() {
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState('load');
   }
 
   async getTitle() {

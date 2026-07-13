@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
 import { BaseComponent } from './baseComponent';
 
-export class CoockiePopUp extends BaseComponent {
+export class CookiePopUp extends BaseComponent {
   readonly acceptAllCookiesButton: Locator;
   readonly cookieSettingsButton: Locator;
 
