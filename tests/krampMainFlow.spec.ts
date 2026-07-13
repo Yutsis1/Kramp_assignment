@@ -5,6 +5,7 @@ import { LoginPage } from '../pages/loginPage';
 import { ProductPage } from '../pages/productPage';
 import { CartPage } from '../pages/cartPage';
 import { CheckoutPage } from '../pages/checkoutPage';
+import { ConfirmationPage } from '../pages/confirmationPage';
 
 
 test('Kramp Main flow', async ({ page }) => {
@@ -61,7 +62,18 @@ test('Kramp Main flow', async ({ page }) => {
     await cartPage.proceedToCheckout();
     const checkoutPage = new CheckoutPage(page);
     await checkoutPage.waitForPage();
+    await checkoutPage.paymentOptions.isVisible();
     await checkoutPage.placeOrder();
+  });
+  await test.step('Verify order confirmation', async () => {
+    const confirmationPage = new ConfirmationPage(page);
+    await confirmationPage.verifyOrderConfirmed();
+    await confirmationPage.verifyPartNumber(partNumber);
+    const confirmationLine = confirmationPage.itemForPartNumber(partNumber);
+    await confirmationLine.verifyQuantity(productQuantity);
+    await confirmationLine.verifyBruttoUnitPrice(productPrice);
+    await confirmationLine.verifyBruttoTotal(productQuantity, productPrice);
+    await confirmationLine.verifyBruttoPriceCalculation();
   });
 });
 

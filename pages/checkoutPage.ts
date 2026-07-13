@@ -17,7 +17,6 @@ export class CheckoutPage extends BasePage {
   readonly totalPrice: Locator;
   readonly paymentOptions: Locator;
   readonly placeOrderButton: Locator;
-  readonly termsAndConditionsLink: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -40,7 +39,6 @@ export class CheckoutPage extends BasePage {
     this.totalPrice = page.getByTestId('total-price-cell');
     this.paymentOptions = page.getByTestId('payment-options');
     this.placeOrderButton = page.getByTestId('checkout-button');
-    this.termsAndConditionsLink = page.getByRole('link', { name: 'onze voorwaarden' });
   }
 
   deliveryAddress(addressName: string): Locator {
@@ -64,10 +62,14 @@ export class CheckoutPage extends BasePage {
   }
 
   async placeOrder() {
+    await this.verifyReady();
     await this.placeOrderButton.click();
   }
 
   async verifyReady() {
+    await expect(this.deliveryAddressOptions).toBeVisible();
+    await expect(this.totalDeliveryCost).toBeVisible();
+    await expect(this.shippingCostsLink).toBeVisible();
     await expect(this.placeOrderButton).toBeVisible();
   }
 }
