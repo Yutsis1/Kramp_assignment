@@ -4,6 +4,7 @@ import { MainPage } from '../pages/mainPage';
 import { LoginPage } from '../pages/loginPage';
 import { ProductPage } from '../pages/productPage';
 import { CartPage } from '../pages/cartPage';
+import { CheckoutPage } from '../pages/checkoutPage';
 
 
 test('Kramp Main flow', async ({ page }) => {
@@ -11,7 +12,6 @@ test('Kramp Main flow', async ({ page }) => {
   const productQuantity = randomInt(1, 100); // Random quantity between 1 and 100
   const partNumber = '717004KR';
   let productPrice = 0;
-  let productSubtotal = 0;
   await test.step('Go to the main page', async () => {
     await mainPage.goto('');
     const cookiePopUp = new CookiePopUp(page);
@@ -59,6 +59,9 @@ test('Kramp Main flow', async ({ page }) => {
   await test.step('Proceed to checkout', async () => {
     const cartPage = new CartPage(page);
     await cartPage.proceedToCheckout();
+    const checkoutPage = new CheckoutPage(page);
+    await checkoutPage.waitForPage();
+    await checkoutPage.placeOrder();
   });
 });
 

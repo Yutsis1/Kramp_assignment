@@ -9,9 +9,6 @@ export class CartPage extends BasePage {
 
   readonly cartLines: Locator;
   readonly checkoutButton: Locator;
-  readonly grossTotal: Locator;
-  readonly netTotal: Locator;
-  readonly totalExcludingVat: Locator;
   readonly quickAddPartNumberInput: Locator;
   readonly quickAddQuantityInput: Locator;
   readonly quickAddReferenceInput: Locator;
@@ -21,10 +18,7 @@ export class CartPage extends BasePage {
     super(page);
 
     this.cartLines = page.getByTestId('quotation-line');
-    this.checkoutButton = page.getByTestId('checkout-button').first();
-    this.grossTotal = page.getByTestId('price-summary-gross').first();
-    this.netTotal = page.getByTestId('price-summary-net').first();
-    this.totalExcludingVat = page.getByTestId('price-summary-total').first();
+    this.checkoutButton = page.getByTestId('OrderOverviewPanel').getByTestId('checkout-button');
     this.quickAddPartNumberInput = page.getByTestId('c-quotation-search-items-in-quotation');
     this.quickAddQuantityInput = page.getByTestId('c-quotation-quantity');
     this.quickAddReferenceInput = page.getByTestId('c-quotation-comment');
@@ -49,10 +43,6 @@ export class CartPage extends BasePage {
 
   async verifyPartNumberInCart(partNumber: string) {
     await expect(this.lineForPartNumber(partNumber).root).toBeVisible();
-  }
-
-  async getTotalExcludingVat(): Promise<string> {
-    return (await this.totalExcludingVat.innerText()).trim();
   }
 
   async proceedToCheckout() {
