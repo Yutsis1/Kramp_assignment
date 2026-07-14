@@ -9,6 +9,13 @@ The test is following simple flow for the user it apply search (possible point t
 There are other user flows which could be covered such as seraching for dealer or signing up as a customer. For this scope is better to have other user flow. 
 # Run and use
 To run tests you have several options such as native, IDE and CI runs. 
+## Requirements
+before running code you need to install
+[Node js 22+](https://nodejs.org/en/download)
+
+```bash
+npm ci
+```
 ## PreRequisites
 To ran native you need to install all [requirements](##Requirements) on your computer. 
 You also need to set up some enviromental variables or define yout `.env` file. Mandatory variables are described in `.env.example`
