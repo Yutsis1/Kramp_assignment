@@ -5,9 +5,9 @@ import { CheckoutPage } from '../pages/checkoutPage';
 import { ConfirmationPage } from '../pages/confirmationPage';
 
 test.beforeEach(async ({ mainPage, quotationApi }) => {
-  await mainPage.waitForPage();
   // init a quotationApi as client
   await quotationApi.getOpenQuotations();
+  await mainPage.waitForPage();
 });
 
 // cleanup after each test to ensure no leftover quotation lines affect subsequent tests
