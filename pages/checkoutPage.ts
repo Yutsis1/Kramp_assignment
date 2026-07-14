@@ -67,6 +67,7 @@ export class CheckoutPage extends BasePage {
   }
 
   async verifyReady() {
+    await this.waitForPage();
     await expect(this.deliveryAddressOptions).toBeVisible();
     await expect(this.totalDeliveryCost).toBeVisible();
     await expect(this.shippingCostsLink).toBeVisible();

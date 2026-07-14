@@ -1,11 +1,16 @@
-import { test, expect } from '@playwright/test';
-import { CookiePopUp } from '../pages/comonents/coockiePopUp';
-import { MainPage } from '../pages/mainPage';
-import { LoginPage } from '../pages/loginPage';
+import { test } from '../fixtures/loginFixture';
 import { ProductPage } from '../pages/productPage';
 import { CartPage } from '../pages/cartPage';
 import { CheckoutPage } from '../pages/checkoutPage';
 import { ConfirmationPage } from '../pages/confirmationPage';
+
+test.beforeEach(async ({ mainPage, quotationApi }) => {
+  await quotationApi.getOpenQuotations();
+});
+
+test.afterEach(async ({ quotationApi }) => {
+  await quotationApi.clearOpenQuotationLines();
+});
 
 /**
  * This is a Kramp end-2-end scenario for web platform user
@@ -16,29 +21,12 @@ import { ConfirmationPage } from '../pages/confirmationPage';
  * And multiple smaller component/unit tests for each page/component
  * It shows that the product can generate at least minimal value without additional time for e2e tests.
  */
-test('Kramp Main flow', async ({ page }) => {
-  const mainPage = new MainPage(page);
+test('Kramp Main flow', async ({ page, mainPage }) => {
   const productQuantity = randomInt(1, 100); // Random quantity between 1 and 100
   const partNumber = '717004KR';
   let productPrice = 0;
-  await test.step('Go to the main page', async () => {
-    await mainPage.goto('');
-    const cookiePopUp = new CookiePopUp(page);
-    await cookiePopUp.expectVisible();
-    await cookiePopUp.acceptAllCookies();
-    await cookiePopUp.expectHidden();
-  });
-
-  await test.step('Go to login page and login', async () => {
-    await mainPage.topBar.loginLink.click();
-    const loginPage = new LoginPage(page);
-    await loginPage.closeCookiePopUpIfAppears();
-    await loginPage.login(process.env.USER_LOGIN!, process.env.USER_PASSWORD!);
-    await mainPage.waitForPage();
-    await mainPage.topBar.expectVisible();
-  });
-
   await test.step('Search for a model', async () => {
+    await mainPage.waitForPage();
     await mainPage.topBar.searchInput.fill(partNumber);
     await mainPage.topBar.searchDialog.selectPartNumberSuggestion(partNumber);
     const productPage = new ProductPage(page);
@@ -83,6 +71,7 @@ test('Kramp Main flow', async ({ page }) => {
     await confirmationLine.verifyBruttoTotal(productQuantity, productPrice);
     await confirmationLine.verifyBruttoPriceCalculation();
   });
+
 });
 
 export function randomInt(min: number, max: number): number {

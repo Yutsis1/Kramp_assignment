@@ -67,6 +67,7 @@ export class ProductPage extends BasePage {
   }
 
   async verifyAddedToCart(quantity: number) {
+    await this.waitForPage();
     await expect(this.addToCartButton).toContainText(`${quantity} in`);
 
     // advanced try to verify the button state

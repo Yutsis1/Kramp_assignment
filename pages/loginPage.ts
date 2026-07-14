@@ -34,7 +34,7 @@ export class LoginPage extends BasePage {
   }
 
   async closeCookiePopUpIfAppears() {
-    await this.page.waitForLoadState('load');
+    await this.waitForPage();
     if (await this.cookiePopUp.root.isVisible()) {
       await this.cookiePopUp.acceptAllCookies();
     }

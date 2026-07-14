@@ -10,6 +10,7 @@ export abstract class BasePage {
 
   async waitForPage() {
     await this.page.waitForLoadState('load');
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   async getTitle() {
