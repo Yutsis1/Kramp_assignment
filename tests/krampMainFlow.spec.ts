@@ -7,7 +7,15 @@ import { CartPage } from '../pages/cartPage';
 import { CheckoutPage } from '../pages/checkoutPage';
 import { ConfirmationPage } from '../pages/confirmationPage';
 
-
+/**
+ * This is a Kramp end-2-end scenario for web platform user
+ * It designed to test main flow as all steps are necessary for basic user experience. 
+ * It means if any step from suggested isn't possible to perform the main flow is broken
+ * User can't place an order and basic functionality is not fulfiled
+ * In mature systems the best practices is to have one generic happy path test flow
+ * And multiple smaller component/unit tests for each page/component
+ * It shows that the product can generate at least minimal value without additional time for e2e tests.
+ */
 test('Kramp Main flow', async ({ page }) => {
   const mainPage = new MainPage(page);
   const productQuantity = randomInt(1, 100); // Random quantity between 1 and 100
