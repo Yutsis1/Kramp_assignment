@@ -5,6 +5,7 @@ import { CheckoutPage } from '../pages/checkoutPage';
 import { ConfirmationPage } from '../pages/confirmationPage';
 
 test.beforeEach(async ({ mainPage, quotationApi }) => {
+  await mainPage.waitForPage();
   // init a quotationApi as client
   await quotationApi.getOpenQuotations();
 });
@@ -25,7 +26,7 @@ test.afterEach(async ({ quotationApi }) => {
  */
 test('Kramp Main flow', async ({ page, mainPage }) => {
   const productQuantity = randomInt(1, 100); // Random quantity between 1 and 100
-  const partNumber = '9311450';
+  const partNumber = '717004KR';
   let productPrice = 0;
   await test.step('Search for a model', async () => {
     await mainPage.waitForPage();
